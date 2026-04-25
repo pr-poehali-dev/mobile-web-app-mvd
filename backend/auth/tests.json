@@ -1,0 +1,29 @@
+{
+  "tests": [
+    {
+      "name": "Успешный вход",
+      "method": "POST",
+      "path": "/",
+      "body": {"tab_number": "МСК-77-4421", "password": "1234"},
+      "expectedStatus": 200,
+      "expectedBody": {"ok": true},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Неверный пароль",
+      "method": "POST",
+      "path": "/",
+      "body": {"tab_number": "МСК-77-4421", "password": "wrong"},
+      "expectedStatus": 401,
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Пустые поля",
+      "method": "POST",
+      "path": "/",
+      "body": {},
+      "expectedStatus": 400,
+      "bodyMatcher": "partial"
+    }
+  ]
+}

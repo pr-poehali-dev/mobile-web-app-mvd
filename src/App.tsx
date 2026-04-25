@@ -406,31 +406,45 @@ function HelpPage() {
 
 // ─── Экран авторизации ───────────────────────────────────────────────────────
 
-const DEMO_USERS: Record<string, { password: string; name: string; rank: string; uid: string }> = {
-  "МСК-77-4421": { password: "1234", name: "Петров Андрей Владимирович", rank: "Майор полиции", uid: "77-OPD-00412" },
-  "МСК-77-0001": { password: "admin", name: "Иванов Сергей Михайлович", rank: "Подполковник полиции", uid: "77-OPD-00001" },
-};
+const AUTH_URL = "https://functions.poehali.dev/780e001a-0bd7-429a-b95f-c7cdf46529ec";
 
-function LoginPage({ onLogin }: { onLogin: (uid: string) => void }) {
+interface Officer {
+  uid: string;
+  full_name: string;
+  rank: string;
+  department: string;
+  tab_number: string;
+  access_level: number;
+}
+
+function LoginPage({ onLogin }: { onLogin: (officer: Officer) => void }) {
   const [tabNum, setTabNum] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
-    setTimeout(() => {
-      const user = DEMO_USERS[tabNum.toUpperCase()];
-      if (user && user.password === password) {
-        onLogin(user.uid);
+    try {
+      const res = await fetch(AUTH_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tab_number: tabNum, password }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        onLogin(data.officer);
       } else {
-        setError("Неверный табельный номер или пароль");
+        setError(data.error || "Ошибка авторизации");
       }
+    } catch {
+      setError("Ошибка соединения с сервером");
+    } finally {
       setLoading(false);
-    }, 800);
+    }
   };
 
   return (
@@ -551,10 +565,10 @@ const NAV_ITEMS: { id: Page; label: string; icon: Parameters<typeof Icon>[0]["na
 
 export default function App() {
   const [page, setPage] = useState<Page>("home");
-  const [authUid, setAuthUid] = useState<string | null>(null);
+  const [officer, setOfficer] = useState<Officer | null>(null);
 
-  if (!authUid) {
-    return <LoginPage onLogin={setAuthUid} />;
+  if (!officer) {
+    return <LoginPage onLogin={setOfficer} />;
   }
 
   const renderPage = () => {
@@ -598,9 +612,9 @@ export default function App() {
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 text-white/70 text-xs font-mono-data">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></div>
-              {authUid}
+              {officer.uid}
             </div>
-            <button onClick={() => setAuthUid(null)} className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/80 transition-colors" title="Выйти">
+            <button onClick={() => setOfficer(null)} className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/80 transition-colors" title="Выйти">
               <Icon name="LogOut" size={14} />
             </button>
           </div>
