@@ -4,89 +4,50 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 216 33% 97%;
+    --foreground: 220 40% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 40% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 40% 10%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 218 72% 28%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 214 30% 91%;
+    --secondary-foreground: 218 72% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 214 25% 93%;
+    --muted-foreground: 215 20% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 210 80% 50%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 45%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 214 25% 85%;
+    --input: 214 25% 88%;
+    --ring: 218 72% 35%;
 
-    --radius: 0.5rem;
+    --radius: 0.25rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 220 45% 14%;
+    --sidebar-foreground: 210 30% 85%;
+    --sidebar-primary: 210 80% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 220 40% 20%;
+    --sidebar-accent-foreground: 210 30% 90%;
+    --sidebar-border: 220 35% 20%;
+    --sidebar-ring: 210 80% 55%;
+
+    --navy: 220 45% 14%;
+    --navy-light: 218 40% 20%;
+    --steel: 213 30% 35%;
+    --sky: 210 80% 55%;
+    --sky-light: 210 70% 70%;
   }
 }
 
@@ -97,5 +58,91 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  .font-mono-data {
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  .nav-item-active {
+    @apply bg-white/10 text-white;
+  }
+
+  .status-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium font-mono-data uppercase tracking-wider;
+  }
+
+  .card-official {
+    @apply bg-white border border-border rounded shadow-sm;
+  }
+
+  .header-official {
+    background: linear-gradient(
+      135deg,
+      hsl(220 45% 12%) 0%,
+      hsl(218 55% 22%) 100%
+    );
+    border-bottom: 3px solid hsl(210 80% 50%);
+  }
+
+  .sidebar-official {
+    background: linear-gradient(
+      180deg,
+      hsl(220 45% 12%) 0%,
+      hsl(220 40% 16%) 100%
+    );
+  }
+
+  .table-row-hover {
+    @apply hover:bg-blue-50/60 transition-colors cursor-pointer;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.35s ease-out both;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out both;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .grid-pattern {
+    background-image:
+      linear-gradient(rgba(33, 78, 150, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(33, 78, 150, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 }
